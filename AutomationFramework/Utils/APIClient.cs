@@ -14,7 +14,7 @@ namespace AutomationFramework.Utils
             var response = _client.Execute<T>(request);
             if (response.ErrorException != null)
             {
-                throw new ApplicationException($"API request failed: {response.ErrorMessage}", response.ErrorException);
+                throw new ApplicationException($"API request failed : {response.ErrorMessage}", response.ErrorException);
             }
             return response.Data;
         }
