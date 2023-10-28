@@ -1,0 +1,10 @@
+﻿{
+  "Browser": {
+    "Type": "Chrome"
+
+  },
+  "Api": {
+    "BaseUrl": "https://api.example.com"
+  }
+
+}
