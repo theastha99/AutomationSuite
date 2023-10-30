@@ -1,19 +1,32 @@
 ﻿using OpenQA.Selenium;
+using SeleniumExtras.PageObjects;
+using AutomationFramework.Utils;
+
+
 
 namespace AutomationFramework
 {
-    public class HomePage : BasePage
+    public class HomePage 
     {
-  
-        private string homePageUrl = "https://localhost:44449/";
+        private IWebDriver? _driver;
 
-        public HomePage(IWebDriver driver) : base(driver)
+        [FindsBy(How = How.LinkText, Using = "Orders")]
+        public IWebElement? orderbutton;
+
+        public HomePage(IWebDriver driver) 
         {
-            Driver = driver;
+            _driver = driver;
+            PageFactory.InitElements(driver, this);
         }
+        public void LaunchApp()
+        {
+            _driver?.Navigate().GoToUrl(TestConfig.BaseUrl);
+        }
+
         public void NavigateToOrders()
         {
-            Driver.Navigate().GoToUrl(homePageUrl + "/orders");
+            
+            orderbutton?.Click();
         }
       
 

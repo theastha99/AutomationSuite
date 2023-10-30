@@ -2,9 +2,9 @@
   "Browser": {
     "Type": "Chrome"
 
-  },
-  "Api": {
-    "BaseUrl": "https://api.example.com"
   }
+  //"Api": {
+  //  "BaseUrl": "https://api.example.com"
+  //}
 
 }

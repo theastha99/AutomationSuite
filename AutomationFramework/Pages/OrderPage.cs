@@ -1,26 +1,45 @@
-﻿using System;
+﻿
+using AutomationFramework.Utils;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.PageObjects;
+
+
 
 namespace AutomationFramework
 {
-    public class OrderPage : BasePage
+    public class OrderPage 
     {
-        private IWebDriver driver;
+        private IWebDriver _driver;
+        protected WebDriverWait? Wait;
 
-        public OrderPage(IWebDriver driver) : base(driver)
+        [FindsBy(How = How.CssSelector , Using = "button[ng-reflect-router-link^='/new-order']")]
+        public IWebElement? _createNew;
+
+        [FindsBy(How = How.Name, Using = "Accession Number")]
+        private IWebElement? _accessionNumber;
+
+
+
+        public OrderPage(IWebDriver driver) 
         {
-            this.driver = driver;
+            _driver = driver;
+            PageFactory.InitElements(driver, this);
+
+
         }
-        public void ClickOnCreateOrder(string baseUrl)
+        public void ClickOnCreateOrder()
+
         {
-            Driver.Navigate().GoToUrl(baseUrl + "/orders");
+           
+            _createNew?.Click();
         }
         public bool IsOrderItemDisplayed()
         {
-            IWebElement orderItem = Driver.FindElement(By.XPath("//div[@class='order-item']"));
+            IWebElement orderItem = _driver.FindElement(By.XPath("//div[@class='order-item']"));
             return orderItem != null;
         }
-        public void CreateOrder(string productName, int quantity, string customerName, string customerEmail)
+        public void EnterOrderDetails(string productName, int quantity, string customerName, string customerEmail)
         {
             // Implement your order creation logic here.
         }

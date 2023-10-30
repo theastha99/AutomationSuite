@@ -7,17 +7,21 @@ namespace AutomationFramework.Utils
         private readonly RestClient _client;
         public APIClient(string baseUrl)
 		{
-            _client = new RestClient(baseUrl);
+            _client = new RestClient(TestConfig.BaseUrl);
         }
-        public T Execute<T>(RestRequest request) where T : new()
+        public RestResponse Get(string resource)
         {
-            var response = _client.Execute<T>(request);
-            if (response.ErrorException != null)
-            {
-                throw new ApplicationException($"API request failed : {response.ErrorMessage}", response.ErrorException);
-            }
-            return response.Data;
+            var request = new RestRequest(resource, Method.Get);
+
+            return _client.Execute(request);
         }
+        public RestResponse Post(string resource, object requestBody)
+        {
+            var request = new RestRequest(resource, Method.Post);
+            request.AddJsonBody(requestBody);
+            return _client.Execute(request);
+        }
+      
     }
 }
 

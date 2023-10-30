@@ -1,34 +1,44 @@
-﻿using System;
+﻿
 using AutomationFramework.Utils;
-using Microsoft.Extensions.Configuration;
-using RestSharp;
 
 namespace AutomationFramework.Tests
 {
 	public class APITest
 	{
-        private readonly string baseUrl;
-        public APITest()
 
-		{
-            var config = new ConfigurationBuilder()
-           .AddJsonFile("appconfig.json")
-           .Build();
-
-            baseUrl = config["Api:BaseUrl"];
-            if (string.IsNullOrEmpty(baseUrl))
-            {
-                throw new ArgumentNullException("Api:BaseUrl is missing or empty in appsettings.json");
-            }
-        }
-        public void PerformGetRequest()
+        [Fact]
+        public void PerformGetRequestForOrder()
         {
-            var client = new APIClient(baseUrl);
+            var client = new APIClient("https://localhost:44449/");
 
-            var request = new RestRequest("endpoint/path", Method.Get);
+            var getResponse = client.Get("api/Orders");
 
-            // Execute the request and handle the response
-            // (code for executing the request remains the same as previous examples)
+            Console.WriteLine(getResponse);
+            //Assert.True(getResponse.IsSuccessful, "API request is successful");
+            if (getResponse.IsSuccessful)
+            {
+                // Handle successful GET response
+                Console.WriteLine(getResponse.Content);
+            }
+
+        }
+
+        [Fact]
+        public void PerformGetRequestForPatients()
+        {
+            var client = new APIClient("https://localhost:44449/");
+
+            var getResponse = client.Get("api/Patients");
+
+            Console.WriteLine(getResponse);
+            //Assert.True(getResponse.IsSuccessful, "API request is successful");
+            if (getResponse.IsSuccessful)
+            {
+                // Handle successful GET response
+                Console.WriteLine(getResponse.Content);
+            }
+
+
         }
     }
 }

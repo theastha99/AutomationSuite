@@ -3,14 +3,13 @@
     using OpenQA.Selenium.Chrome;
     using Microsoft.Extensions.Configuration;
     using Serilog;
-    using Serilog.Sinks.SystemConsole;
     using OpenQA.Selenium.Edge;
     using OpenQA.Selenium.Firefox;
 
     namespace AutomationFramework.Utils
     {
         public class WebDriverFixture : IClassFixture<WebDriverFactory>
-        {
+    {
             public IWebDriver Driver { get; }
      
 
@@ -35,7 +34,11 @@
                     throw new Exception("Failed to initialize WebDriver.");
                 }
             }
-        }
+
+      
+
+
+    }
 
         public class WebDriverFactory
         {
@@ -63,6 +66,8 @@
                 }
         
             }
+
+
         }
     }
 

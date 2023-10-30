@@ -1,37 +1,42 @@
 ﻿using System;
 using OpenQA.Selenium;
 using AutomationFramework.Utils;
+using Xunit.Abstractions;
+using SeleniumExtras.WaitHelpers;
 
 namespace AutomationFramework
 {
-    public class OrderTest : IClassFixture<WebDriverFixture>
+    public class OrderTest : TestBase
     {
- 
-        private HomePage homePage;
-        private OrderPage orderPage;
-        public OrderTest(WebDriverFixture fixture)
-        {
 
-            homePage = new HomePage(fixture.Driver);
-            orderPage = new OrderPage(fixture.Driver);
+        private readonly ITestOutputHelper _output;
+
+        public OrderTest(WebDriverFixture fixture, ITestOutputHelper output) : base(fixture)
+        {
+            _output = output;
+
         }
 
         [Fact]
-        public void CreateOrderTest()
+        public void ValidateMandatoryFieldsForOrderForm()
         {
             // Navigate to the homepage.
-            homePage.NavigateToOrders();
+            HomePage.LaunchApp();
+            WaitHelpers.WaitForPageLoad(Driver, 5);
+            WaitHelpers.WaitForElementToBeClickable(Driver, HomePage.orderbutton, 5);
+            HomePage.NavigateToOrders();
+            WaitHelpers.WaitForElementToBeClickable(Driver, OrderPage._createNew, 5);
+            OrderPage.ClickOnCreateOrder();
+            WaitHelpers.WaitForElementToBeClickable(Driver, NewOrderPage.mrn, 5);
+            NewOrderPage.EnterDetailsForNewOrder();
+            WaitHelpers.WaitForElementToBeClickable(Driver, NewOrderPage.submitbutton, 5);
+            NewOrderPage.EnterDetailsForNewOrder();
+            _output.WriteLine("Order entry test completed.");
 
-            // Perform actions on the homepage.
-            // E.g., click buttons or links to navigate to the order page.
 
-            // Initialize the OrderPage and perform order creation actions.
-            //var orderPage = new OrderPage(driver);
-            //orderPage.CreateOrder("Product1", 2, "John Doe", "johndoe@example.com");
-
-            //// Assert order creation success or any other validation.
-            //Assert.True(orderPage.IsOrderCreatedSuccessfully);
         }
     }
+
+    
 }
 
